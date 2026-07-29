@@ -99,11 +99,11 @@ main { position: relative; z-index: 3; }
   background: var(--paper); pointer-events: none;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: scale .3s var(--ease-silk), opacity .3s var(--ease-silk);
+  transition: opacity .3s var(--ease-silk);
   opacity: 0;
 }
 .cursor.is-on { opacity: 1; }
-.cursor.is-hover { scale: 2.6; opacity: .85; }
+.cursor.is-hover { opacity: .85; }  /* scale is driven in cursor.js, inside the transform */
 @media (hover: none) { .cursor { display: none; } }
 /* html-level so the native arrow never leaks back (menus, transitions) */
 html.has-cursor, html.has-cursor * { cursor: none !important; }
