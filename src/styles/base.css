@@ -92,21 +92,21 @@ ul { list-style: none; }
 main { position: relative; z-index: 3; }
 
 /* ── cursor ────────────────────────────────────────────────────── */
+/* difference blend keeps the dot visible over any tone — no swapping */
 .cursor {
   position: fixed; top: 0; left: 0; z-index: 30;
-  width: 8px; height: 8px; border-radius: 50%;
+  width: 11px; height: 11px; border-radius: 50%;
   background: var(--paper); pointer-events: none;
+  mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: scale .3s var(--ease-silk), opacity .3s var(--ease-silk),
-              background-color .3s var(--ease-silk);
+  transition: scale .3s var(--ease-silk), opacity .3s var(--ease-silk);
   opacity: 0;
 }
 .cursor.is-on { opacity: 1; }
-.cursor.is-hover { scale: 3; opacity: .35; }
-.cursor.is-ink { background: var(--ink); }
+.cursor.is-hover { scale: 2.6; opacity: .85; }
 @media (hover: none) { .cursor { display: none; } }
-body.has-cursor { cursor: none; }
-body.has-cursor a, body.has-cursor button { cursor: none; }
+/* html-level so the native arrow never leaks back (menus, transitions) */
+html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* ── page transition scrim ─────────────────────────────────────── */
 .scrim {
@@ -147,5 +147,5 @@ body.has-cursor a, body.has-cursor button { cursor: none; }
   .band-track { animation: none; }
   .fluid { display: none; }
   .cursor { display: none; }
-  body.has-cursor, body.has-cursor a, body.has-cursor button { cursor: auto; }
+  html.has-cursor, html.has-cursor * { cursor: auto !important; }
 }

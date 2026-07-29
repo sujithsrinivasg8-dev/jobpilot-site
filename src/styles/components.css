@@ -127,11 +127,15 @@
   line-height: 1.25; letter-spacing: .24em; text-transform: lowercase;
   display: inline-flex; align-items: center; gap: 0;
 }
+/* dash space is reserved — labels never shift, the line simply draws in */
 .menu-link::before {
-  content: ''; width: 0; height: 1px; background: var(--paper);
-  transition: width var(--dur-micro) var(--ease-silk), margin-right var(--dur-micro) var(--ease-silk);
+  content: ''; flex: none; width: 26px; height: 1px; background: var(--paper);
+  margin-right: 16px;
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--dur-micro) var(--ease-silk);
 }
-.menu-link:hover::before { width: 24px; margin-right: 18px; }
+.menu-link:hover::before, .menu-link:focus-visible::before { transform: scaleX(1); }
+.menu-link[aria-current="page"]::before { transform: scaleX(1); opacity: .45; }
 .menu-link[aria-current="page"] { color: var(--paper-60); }
 
 .menu-group { margin: .4em 0; }
