@@ -30,13 +30,19 @@
 
 <br/>
 
-## ✦ where the actual instrument lives
+## ✦ the cockpit — the instrument is IN the site
 
-This repository is the **public face** — a static storytelling site. The working platform
-(resume studio, recruiter-brain scoring, XYZ tailoring, review queue, tracker) is a separate
-FastAPI + React application that **runs privately on the pilot's own machine**, because it
-holds a real resume and application history. By design, none of that data touches this site
-or any public server.
+**[/cockpit](https://sujithsrinivasg8-dev.github.io/jobpilot-site/cockpit.html)** is the working
+platform itself, running **entirely in your browser**: resume studio (paste or .docx upload,
+parsed to stable-id bullets), recruiter-brain scoring against a weighted rubric, XYZ tailoring
+with `[METRIC NEEDED]` placeholders that hard-block approval, a review queue with before/after
+diffs, an application tracker with immutable event timelines, and the Today ledger.
+
+Everything persists in `localStorage` — there is no server, and nothing you enter ever leaves
+your machine. Add an Anthropic API key in its settings and scoring/tailoring become real Claude
+calls made directly from your browser; without one, a deterministic stub brain runs the same
+pipeline. (A fuller local FastAPI + React edition with live URL scraping and DOCX rendering
+lives off-repo on the pilot's machine.)
 
 ## ✦ the six signature mechanics
 

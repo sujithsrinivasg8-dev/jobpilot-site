@@ -56,6 +56,7 @@ const shellTop = (title, desc, page) => `<!doctype html>
         </li>
         <li><a class="menu-link" href="/company.html">company</a></li>
         <li><a class="menu-link" href="/contact.html">contact</a></li>
+        <li><a class="menu-link" href="/cockpit.html">cockpit</a></li>
       </ul>
     </nav>
     <div class="menu-edge menu-edge--left"><a class="roll" href="/privacy.html">privacy</a></div>
@@ -87,6 +88,7 @@ const footer = `
             <li><a class="roll" href="/philosophy.html">philosophy</a></li>
             <li><a class="roll" href="/company.html">company</a></li>
             <li><a class="roll" href="/contact.html">contact</a></li>
+            <li><a class="roll" href="/cockpit.html">cockpit</a></li>
             <li><a class="roll" href="/privacy.html">privacy</a></li>
           </ul>
         </div>
@@ -361,8 +363,45 @@ pages.push({
     nextStrip('/index.html', 'home', 'hero')
 })
 
+/* the cockpit — the working instrument as a page of the site */
+pages.push({
+  path: 'cockpit.html',
+  title: 'cockpit — jobpilot',
+  desc: 'The jobpilot instrument itself — resume studio, recruiter-brain scoring, tailoring, review queue, tracker. Everything runs in your own browser.',
+  page: 'cockpit',
+  script: 'src/js/cockpit-main.js',
+  body: `
+    <section class="ck">
+      <div class="ck-head">
+        <p class="eyebrow">the cockpit</p>
+        <h1>The instrument itself.</h1>
+        <p class="lede">Everything on this page runs in your browser and stays in your browser —
+        your resume, your postings, your history. There is no server behind it, and nothing you
+        enter ever leaves your hands. Begin in the studio; end with an approval only you can give.</p>
+      </div>
+      <nav class="ck-tabs" id="ckTabs" aria-label="cockpit sections">
+        <button class="ck-tab" data-view="today">today</button>
+        <button class="ck-tab" data-view="studio">studio</button>
+        <button class="ck-tab" data-view="discovery">discovery</button>
+        <button class="ck-tab" data-view="review">review <span class="count"></span></button>
+        <button class="ck-tab" data-view="tracker">tracker</button>
+        <button class="ck-tab" data-view="settings">settings</button>
+      </nav>
+      <div id="ckViews">
+        <div class="ck-view" data-view="today"></div>
+        <div class="ck-view" data-view="studio"></div>
+        <div class="ck-view" data-view="discovery"></div>
+        <div class="ck-view" data-view="review"></div>
+        <div class="ck-view" data-view="tracker"></div>
+        <div class="ck-view" data-view="settings"></div>
+      </div>
+    </section>
+`,
+})
+
 for (const p of pages) {
   let out = shellTop(p.title, p.desc, p.page) + p.body + footer
+  if (p.script) out = out.replace('src/js/app.js', p.script)
   // depth-aware relative links so the site works under any base path
   const prefix = p.path.includes('/') ? '../' : ''
   out = out.replaceAll('href="/', `href="${prefix}`)

@@ -11,6 +11,7 @@ export default defineConfig({
         philosophy: resolve(__dirname, 'philosophy.html'),
         company: resolve(__dirname, 'company.html'),
         contact: resolve(__dirname, 'contact.html'),
+        cockpit: resolve(__dirname, 'cockpit.html'),
         privacy: resolve(__dirname, 'privacy.html'),
         discover: resolve(__dirname, 'pillars/discover.html'),
         tailor: resolve(__dirname, 'pillars/tailor.html'),

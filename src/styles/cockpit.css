@@ -1,0 +1,165 @@
+/* ── the cockpit: the working instrument, in the site's own two colors ── */
+.ck {
+  position: relative;
+  min-height: 100svh;
+  padding: clamp(110px, 16vh, 170px) var(--pad-x) clamp(60px, 9vh, 110px);
+  max-width: 1150px; margin: 0 auto;
+}
+.ck-head { margin-bottom: clamp(30px, 5vh, 50px); }
+.ck-head h1 { font-size: clamp(1.8rem, 3vw, 2.7rem); }
+.ck-head .lede { margin-top: .8em; }
+
+/* tab nav — lowercase Cinzel labels with the dash language */
+.ck-tabs {
+  display: flex; flex-wrap: wrap; gap: clamp(16px, 2.6vw, 36px);
+  border-bottom: 1px solid var(--hairline-dark);
+  padding-bottom: 14px; margin-bottom: clamp(28px, 4.5vh, 44px);
+}
+.ck-tab {
+  font-family: var(--font-label); font-size: var(--fs-eyebrow);
+  letter-spacing: .22em; text-transform: lowercase;
+  color: var(--paper-40); display: inline-flex; align-items: center;
+  transition: color var(--dur-micro) var(--ease-silk);
+}
+.ck-tab::before {
+  content: ''; width: 18px; height: 1px; background: var(--paper);
+  margin-right: 10px; transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--dur-micro) var(--ease-silk);
+}
+.ck-tab:hover { color: var(--paper-60); }
+.ck-tab.is-on { color: var(--paper); }
+.ck-tab.is-on::before { transform: scaleX(1); }
+.ck-tab .count {
+  font-size: .85em; margin-left: .6em; color: var(--paper-40);
+  font-variant-numeric: tabular-nums;
+}
+
+.ck-view { display: none; }
+.ck-view.is-on { display: block; }
+
+/* panels are hairline-framed, never filled */
+.ck-panel {
+  border: 1px solid var(--hairline-dark);
+  padding: clamp(18px, 2.6vw, 28px);
+  margin-bottom: 18px;
+}
+.ck-panel h3 { font-size: 1.15rem; margin-bottom: .6em; }
+
+.ck-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.ck-kpi { border: 1px solid var(--hairline-dark); padding: 16px 18px; }
+.ck-kpi .n { font-family: var(--font-display); font-size: 2rem; line-height: 1; }
+.ck-kpi .l {
+  font-family: var(--font-label); font-size: .62rem; letter-spacing: .22em;
+  color: var(--paper-60); margin-top: .8em; text-transform: lowercase;
+}
+.ck-kpi .d { font-size: .72rem; color: var(--paper-60); margin-left: .6em; }
+
+/* forms — hairline underlines, floating Cinzel labels (site grammar) */
+.ck-field { position: relative; margin-bottom: 26px; }
+.ck-field input, .ck-field textarea {
+  width: 100%; background: none; border: 0;
+  border-bottom: 1px solid var(--hairline-dark);
+  color: var(--paper); font: inherit; line-height: 1.7;
+  padding: .8em 0 .5em; border-radius: 0; resize: vertical;
+}
+.ck-field input:focus, .ck-field textarea:focus { outline: none; border-color: var(--paper-60); }
+.ck-field label {
+  position: absolute; left: 0; top: .8em;
+  font-family: var(--font-label); font-size: .68rem; letter-spacing: .18em;
+  color: var(--paper-40); text-transform: lowercase; pointer-events: none;
+  transition: transform .4s var(--ease-silk), color .4s var(--ease-silk);
+}
+.ck-field input:focus + label, .ck-field textarea:focus + label,
+.ck-field.has-value label { transform: translateY(-1.9em); color: var(--paper-60); font-size: .58rem; }
+
+/* buttons: quiet text actions with the growing-dash */
+.ck-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-display); font-size: .95rem; letter-spacing: .05em;
+  color: var(--paper); padding: .2em 0;
+}
+.ck-btn::before {
+  content: ''; width: 28px; height: 1px; background: currentColor; opacity: .55;
+  transition: width var(--dur-micro) var(--ease-silk);
+}
+.ck-btn:hover::before, .ck-btn:focus-visible::before { width: 44px; }
+.ck-btn:disabled { color: var(--paper-40); cursor: not-allowed; }
+.ck-btn--danger:hover { color: var(--paper-60); }
+.ck-actions { display: flex; gap: clamp(18px, 3vw, 36px); flex-wrap: wrap; margin-top: 18px; }
+
+/* tables */
+.ck table { width: 100%; border-collapse: collapse; }
+.ck th {
+  text-align: left; font-family: var(--font-label); font-weight: 400;
+  font-size: .6rem; letter-spacing: .24em; text-transform: lowercase;
+  color: var(--paper-40); padding: 10px 12px 8px 0;
+  border-bottom: 1px solid var(--hairline-dark);
+}
+.ck td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--hairline-dark); vertical-align: top; }
+.ck tr:last-child td { border-bottom: 0; }
+
+.ck-chip {
+  font-family: var(--font-label); font-size: .58rem; letter-spacing: .2em;
+  text-transform: lowercase; color: var(--paper-60);
+  border: 1px solid var(--hairline-dark); padding: 3px 10px; white-space: nowrap;
+}
+.ck-chip.hi { color: var(--paper); border-color: var(--paper-60); }
+.ck-num { font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+
+/* diff — before struck, after plain, placeholders flagged */
+.ck-diff { border: 1px solid var(--hairline-dark); margin-bottom: 12px; }
+.ck-diff .tag {
+  font-family: var(--font-label); font-size: .55rem; letter-spacing: .24em;
+  color: var(--paper-40); padding: 7px 14px; border-bottom: 1px solid var(--hairline-dark);
+  text-transform: lowercase;
+}
+.ck-diff .before, .ck-diff .after { padding: 10px 14px; font-size: .86rem; line-height: 1.8; }
+.ck-diff .before { color: var(--paper-40); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--paper) 30%, transparent); border-bottom: 1px dashed var(--hairline-dark); }
+.ck-diff .ph { color: var(--paper); border-bottom: 1px solid var(--paper-60); font-style: italic; }
+
+.ck-warn {
+  font-family: var(--font-label); font-size: .64rem; letter-spacing: .14em;
+  color: var(--paper-60); border: 1px solid var(--paper-25);
+  padding: 12px 16px; margin: 14px 0; line-height: 2;
+}
+
+/* studio bullet editor */
+.ck-section-title {
+  font-family: var(--font-label); font-size: .64rem; letter-spacing: .26em;
+  text-transform: lowercase; color: var(--paper-60); margin: 26px 0 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.ck-section-title::after { content: ''; flex: 1; height: 1px; background: var(--hairline-dark); }
+.ck-bullet { display: flex; gap: 12px; margin-bottom: 4px; align-items: flex-start; }
+.ck-bullet .bid {
+  font-family: var(--font-label); font-size: .55rem; letter-spacing: .1em;
+  color: var(--paper-40); padding-top: 14px; width: 30px; flex: none;
+}
+.ck-bullet textarea {
+  width: 100%; background: none; border: 0; border-bottom: 1px solid transparent;
+  color: var(--paper); font: inherit; font-size: .9rem; line-height: 1.8;
+  padding: 8px 0; resize: none; overflow: hidden; border-radius: 0;
+}
+.ck-bullet textarea:hover { border-bottom-color: var(--hairline-dark); }
+.ck-bullet textarea:focus { outline: none; border-bottom-color: var(--paper-60); }
+
+.ck-note { font-size: .8rem; color: var(--paper-60); line-height: 2; }
+.ck-note.ok { color: var(--paper); }
+.ck-empty { color: var(--paper-40); padding: 34px 0; text-align: center; font-style: italic; }
+.ck-timeline { border-left: 1px solid var(--hairline-dark); margin: 8px 0 8px 6px; padding-left: 18px; }
+.ck-timeline .ev { padding: 5px 0; font-size: .8rem; color: var(--paper-60); }
+.ck-timeline .ev strong { color: var(--paper); font-weight: 500; }
+.ck select {
+  background: none; color: var(--paper); border: 1px solid var(--hairline-dark);
+  font: inherit; font-size: .78rem; padding: 5px 8px;
+}
+.ck select option { background: var(--ink); }
+.ck-file { display: none; }
+.ck-spin { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--hairline-dark); border-top-color: var(--paper); border-radius: 50%; animation: cksp .8s linear infinite; vertical-align: -1px; }
+@keyframes cksp { to { transform: rotate(360deg) } }
+
+@media (max-width: 768px) {
+  .ck { padding-top: 100px; }
+  .ck-tabs { gap: 14px; }
+  .ck table { font-size: .8rem; }
+}

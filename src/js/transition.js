@@ -82,10 +82,15 @@ export function initTransitions(onSwap) {
     if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return
     const url = new URL(a.href, location.href)
     if (url.origin !== location.origin) return
+    // the cockpit is a stateful app page — always a full load, both directions
+    if (url.pathname.includes('cockpit') || location.pathname.includes('cockpit')) return
     e.preventDefault()
     if (samePage(url.href)) return
     navigate(url.href, true)
   })
 
-  window.addEventListener('popstate', () => { navigate(location.href, false) })
+  window.addEventListener('popstate', () => {
+    if (location.pathname.includes('cockpit')) { location.reload(); return }
+    navigate(location.href, false)
+  })
 }

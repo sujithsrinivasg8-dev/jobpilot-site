@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>privacy — jobpilot</title>
-  <meta name="description" content="Privacy at jobpilot." />
+  <title>cockpit — jobpilot</title>
+  <meta name="description" content="The jobpilot instrument itself — resume studio, recruiter-brain scoring, tailoring, review queue, tracker. Everything runs in your own browser." />
   <style>html{background:#0A0801}body{margin:0;background:#0A0801;color:#D9D7D4}.preloader{position:fixed;inset:0;background:#0A0801;z-index:11}</style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500&family=Cinzel:wght@400&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23D9D7D4' stroke-width='6'/%3E%3C/svg%3E">
 </head>
-<body data-page="privacy">
+<body data-page="cockpit">
   <a class="skip-link" href="#page">skip to content</a>
 
   <div class="vignette" aria-hidden="true"></div>
@@ -68,31 +68,31 @@
 
   <main id="page">
 
-    <section class="fv fv--inner">
-      <span class="sect-label" aria-hidden="true">privacy</span>
-      <div class="fv-inner">
-        <p class="eyebrow fv-eyebrow">privacy</p>
-        <h1 class="fv-title">Yours, and<br>only yours.</h1>
-        
+    <section class="ck">
+      <div class="ck-head">
+        <p class="eyebrow">the cockpit</p>
+        <h1>The instrument itself.</h1>
+        <p class="lede">Everything on this page runs in your browser and stays in your browser —
+        your resume, your postings, your history. There is no server behind it, and nothing you
+        enter ever leaves your hands. Begin in the studio; end with an approval only you can give.</p>
       </div>
-      <div class="fv-seal" aria-hidden="true" data-parallax-speed="0.9"></div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-inner" style="max-width: 720px;">
-        <div class="prose">
-          <p data-reveal="lines">Your résumé, your answers, and your correspondence are personal information. They are encrypted at rest, transmitted only where you direct them, and shown to no third party.</p>
-          <p data-reveal="lines">Email access is read-only, granted by you, revocable at any moment. No analytics scripts watch you here. No data is sold, shared, or kept past its welcome.</p>
-          <p data-reveal="lines">When you leave, everything leaves with you.</p>
-        </div>
+      <nav class="ck-tabs" id="ckTabs" aria-label="cockpit sections">
+        <button class="ck-tab" data-view="today">today</button>
+        <button class="ck-tab" data-view="studio">studio</button>
+        <button class="ck-tab" data-view="discovery">discovery</button>
+        <button class="ck-tab" data-view="review">review <span class="count"></span></button>
+        <button class="ck-tab" data-view="tracker">tracker</button>
+        <button class="ck-tab" data-view="settings">settings</button>
+      </nav>
+      <div id="ckViews">
+        <div class="ck-view" data-view="today"></div>
+        <div class="ck-view" data-view="studio"></div>
+        <div class="ck-view" data-view="discovery"></div>
+        <div class="ck-view" data-view="review"></div>
+        <div class="ck-view" data-view="tracker"></div>
+        <div class="ck-view" data-view="settings"></div>
       </div>
     </section>
-
-    <a class="next-strip" href="index.html">
-      <span class="next-eyebrow">next</span>
-      <span class="next-name roll">home</span>
-      <span class="next-art" aria-hidden="true"><img data-art="hero" alt="" /></span>
-    </a>
 
     <footer class="footer">
       <p class="foot-word" data-reveal="chars" aria-label="jobpilot">jobpilot</p>
@@ -138,6 +138,6 @@
     <div class="pre-count"><span id="preCount">0</span></div>
   </div>
 
-  <script type="module" src="src/js/app.js"></script>
+  <script type="module" src="src/js/cockpit-main.js"></script>
 </body>
 </html>
