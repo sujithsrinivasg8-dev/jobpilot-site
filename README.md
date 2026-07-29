@@ -30,6 +30,14 @@
 
 <br/>
 
+## ✦ where the actual instrument lives
+
+This repository is the **public face** — a static storytelling site. The working platform
+(resume studio, recruiter-brain scoring, XYZ tailoring, review queue, tracker) is a separate
+FastAPI + React application that **runs privately on the pilot's own machine**, because it
+holds a real resume and application history. By design, none of that data touches this site
+or any public server.
+
 ## ✦ the six signature mechanics
 
 Every mechanic of the genre is implemented from scratch — no template, no boilerplate.
