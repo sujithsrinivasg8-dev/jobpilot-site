@@ -2,6 +2,7 @@
    browser. Views: today · studio · discovery · review · tracker · settings. */
 import { assess, tailor, hasMetric, PLACEHOLDER_RE } from './brain.js'
 import { parseDocx, parseText } from './parse.js'
+import { daysAgo, detectSource, fetchJd, matchesTargets, sweepBoard } from './sources.js'
 import { addEvent, clearAll, load, save } from './store.js'
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
@@ -107,19 +108,58 @@ function renderStudio(el) {
 const autoGrow = t => { t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px' }
 
 /* ── view: discovery ─────────────────────────────────────────────── */
+let sweepResults = []      // transient — refreshed on every sweep
+let sweepNote = ''
+
 function renderDiscovery(el) {
   el.innerHTML = `
     <div class="ck-panel">
-      <h3>Add a posting</h3>
-      <p class="ck-note">Paste the job description itself — browsers cannot fetch other sites directly,
-      so the cockpit reads what you bring it. Company + title + the full JD text.</p>
-      <div class="ck-field"><input id="ckJobCompany" /><label>company</label></div>
-      <div class="ck-field"><input id="ckJobTitle" /><label>role title</label></div>
-      <div class="ck-field"><input id="ckJobUrl" /><label>posting url (optional)</label></div>
-      <div class="ck-field"><textarea id="ckJobJd" rows="7"></textarea><label>paste the full job description</label></div>
-      <div class="ck-actions"><button class="ck-btn" id="ckAddJob">add to the pipeline</button></div>
-      <p class="ck-note" id="ckJobMsg" style="margin-top:10px"></p>
+      <h3>The watchlist</h3>
+      <p class="ck-note">Company portals the sweep reads — Greenhouse, Lever, and Ashby boards answer the
+      browser directly. Add a company by its board name (usually the company name, lowercase).</p>
+      <table style="margin:14px 0"><tbody>
+        ${S.watchlist.map((w, i) => `
+          <tr><td>${esc(w.label)}</td><td><span class="ck-chip">${w.source}</span></td>
+          <td style="text-align:right"><button class="ck-btn ck-btn--danger" data-unwatch="${i}">remove</button></td></tr>`).join('')}
+        ${S.watchlist.length === 0 ? '<tr><td><p class="ck-empty">the watchlist is empty.</p></td></tr>' : ''}
+      </tbody></table>
+      <div class="ck-field"><input id="ckWatchSlug" /><label>company board name — e.g. anthropic, stripe, notion</label></div>
+      <div class="ck-field has-value"><input id="ckTargets" value="${esc(S.targets)}" /><label>target titles (comma separated — filters the sweep)</label></div>
+      <div class="ck-actions">
+        <button class="ck-btn" id="ckWatchAdd">add to watchlist</button>
+        <button class="ck-btn" id="ckSweep">sweep the portals</button>
+      </div>
+      <p class="ck-note" id="ckSweepMsg" style="margin-top:10px">${esc(sweepNote)}</p>
     </div>
+
+    ${sweepResults.length ? `
+    <div class="ck-panel">
+      <h3>Fresh openings — newest first</h3>
+      <table><thead><tr><th>posted</th><th>company</th><th>role</th><th>location</th><th></th></tr></thead><tbody>
+        ${sweepResults.map((job, i) => `
+          <tr>
+            <td class="ck-num">${daysAgo(job.postedAt)}</td>
+            <td>${esc(job.company)}</td>
+            <td><a href="${esc(job.url)}" target="_blank" rel="noreferrer" data-no-transition style="border-bottom:1px dotted var(--paper-40)">${esc(job.title)}</a></td>
+            <td class="ck-note">${esc(job.location)}</td>
+            <td style="text-align:right">${job.inPipeline
+              ? '<span class="ck-note">in pipeline</span>'
+              : `<button class="ck-btn" data-pull="${i}">pull in &amp; assess</button>`}</td>
+          </tr>`).join('')}
+      </tbody></table>
+    </div>` : ''}
+
+    <details class="ck-panel">
+      <summary class="ck-note" style="cursor:pointer">a posting from somewhere else? paste it manually</summary>
+      <div style="margin-top:16px">
+        <div class="ck-field"><input id="ckJobCompany" /><label>company</label></div>
+        <div class="ck-field"><input id="ckJobTitle" /><label>role title</label></div>
+        <div class="ck-field"><input id="ckJobUrl" /><label>posting url (optional)</label></div>
+        <div class="ck-field"><textarea id="ckJobJd" rows="7"></textarea><label>paste the full job description</label></div>
+        <div class="ck-actions"><button class="ck-btn" id="ckAddJob">add to the pipeline</button></div>
+        <p class="ck-note" id="ckJobMsg" style="margin-top:10px"></p>
+      </div>
+    </details>
     <div class="ck-panel">
       <table><thead><tr><th>company</th><th>role</th><th>status</th><th>score</th><th>verdict</th><th></th></tr></thead>
       <tbody>${S.jobs.length === 0 ? '<tr><td colspan="6"><p class="ck-empty">no postings yet.</p></td></tr>' : ''}
@@ -140,6 +180,59 @@ function renderDiscovery(el) {
       `).join('')}</tbody></table>
     </div>`
 
+  /* watchlist */
+  el.querySelectorAll('[data-unwatch]').forEach(b => b.onclick = () => {
+    S.watchlist.splice(+b.dataset.unwatch, 1); persist(); rerender()
+  })
+  $('#ckTargets').addEventListener('change', () => { S.targets = $('#ckTargets').value; persist() })
+  const sweepMsg = t => { const n = $('#ckSweepMsg'); if (n) n.textContent = t }
+  $('#ckWatchAdd').onclick = async () => {
+    const slug = $('#ckWatchSlug').value.trim().toLowerCase().replace(/\s+/g, '')
+    if (!slug) return
+    if (S.watchlist.some(w => w.slug === slug)) return sweepMsg('already on the watchlist.')
+    sweepMsg('listening at the portals…')
+    const hit = await detectSource(slug)
+    if (!hit) return sweepMsg(`no greenhouse, lever, or ashby board answers to “${slug}” — check the board name.`)
+    S.watchlist.push({ source: hit.source, slug, label: slug.charAt(0).toUpperCase() + slug.slice(1) })
+    persist(); rerender()
+    sweepNote = `${slug} added — a ${hit.source} board with ${hit.count} open roles.`
+    sweepMsg(sweepNote)
+  }
+
+  /* the sweep — newest openings across every watched portal */
+  $('#ckSweep').onclick = async () => {
+    S.targets = $('#ckTargets').value; persist()
+    const btn = $('#ckSweep'); btn.innerHTML = '<span class="ck-spin"></span>'
+    const results = await Promise.all(S.watchlist.map(sweepBoard))
+    const failed = S.watchlist.filter((_, i) => !results[i].ok).map(w => w.label)
+    const seen = new Set(S.jobs.map(j => j.url).filter(Boolean))
+    sweepResults = results.flatMap(r => r.jobs)
+      .filter(job => matchesTargets(job.title, S.targets))
+      .sort((a, b) => new Date(b.postedAt || 0) - new Date(a.postedAt || 0))
+      .slice(0, 40)
+      .map(job => ({ ...job, inPipeline: seen.has(job.url) }))
+    sweepNote = `${sweepResults.length} matching opening(s) across ${S.watchlist.length} portal(s)` +
+      (failed.length ? ` — ${failed.join(', ')} did not answer` : '') + '.'
+    rerender()
+  }
+
+  /* pull a fresh opening into the pipeline and score it immediately */
+  el.querySelectorAll('[data-pull]').forEach(b => b.onclick = async () => {
+    const job = sweepResults[+b.dataset.pull]
+    if (!job || S.jobs.some(x => x.url === job.url)) return
+    b.innerHTML = '<span class="ck-spin"></span>'
+    let jd
+    try { jd = await fetchJd(job) } catch (e) { sweepMsg('could not read that posting: ' + e.message); rerender(); return }
+    const key = (job.company + '|' + job.title).toLowerCase().replace(/[^a-z0-9|]/g, '')
+    const row = { id: ++S.seq.job, key, company: job.company, title: job.title, url: job.url, jd, status: 'DISCOVERED', assessment: null }
+    S.jobs.push(row)
+    job.inPipeline = true
+    persist()
+    if (S.resume) await doAssess(row.id, null)
+    else { rerender(); alert('Pulled in. Upload a master resume in the studio so the brain can score it.') }
+  })
+
+  /* manual paste fallback */
   const msg = t => { $('#ckJobMsg').textContent = t }
   $('#ckAddJob').onclick = () => {
     const company = $('#ckJobCompany').value.trim(), title = $('#ckJobTitle').value.trim()
@@ -157,7 +250,7 @@ function renderDiscovery(el) {
 async function doAssess(jobId, btn) {
   const j = S.jobs.find(x => x.id === jobId)
   if (!S.resume) return alert('Upload a master resume in the studio first — the brain judges (job × resume) pairs.')
-  btn.innerHTML = '<span class="ck-spin"></span>'
+  if (btn) btn.innerHTML = '<span class="ck-spin"></span>'
   try {
     const { result, model } = await assess(j.jd, S.resume, S.settings)
     j.assessment = result; j.model = model
@@ -208,9 +301,10 @@ function renderReview(el) {
             <div class="before">${esc(c.before)}</div><div class="after">${markPh(c.after)}</div></div>`).join('')}
         ${a.changes.length === 0 ? '<p class="ck-note">no bullet changes — the resume already fits.</p>' : ''}
         <div class="ck-actions">
+          <button class="ck-btn" data-download="${a.id}">download tailored resume</button>
+          ${j.url ? `<a class="ck-btn" href="${esc(j.url)}" target="_blank" rel="noreferrer" data-no-transition>open the application page</a>` : ''}
           <button class="ck-btn" data-approve="${a.id}" ${a.placeholders > 0 ? 'disabled' : ''}>approve &amp; mark applied</button>
           <button class="ck-btn ck-btn--danger" data-reject="${a.id}">decline</button>
-          <button class="ck-btn" data-download="${a.id}">download tailored resume</button>
         </div>
       </div>` }).join('')}`
 

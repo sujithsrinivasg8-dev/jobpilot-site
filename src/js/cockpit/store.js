@@ -6,6 +6,13 @@ const blank = () => ({
   jobs: [],                // {id, company, title, url, jd, status, assessment, model}
   apps: [],                // {id, jobId, changes, placeholders, status, fit, appliedAt, events:[], tailored}
   settings: { apiKey: '', model: 'claude-sonnet-4-6' },
+  targets: 'data engineer, software engineer',   // title keywords the sweep filters by
+  watchlist: [                                   // company portals the sweep reads
+    { source: 'greenhouse', slug: 'anthropic', label: 'Anthropic' },
+    { source: 'greenhouse', slug: 'stripe', label: 'Stripe' },
+    { source: 'greenhouse', slug: 'figma', label: 'Figma' },
+    { source: 'greenhouse', slug: 'databricks', label: 'Databricks' },
+  ],
   seq: { job: 0, app: 0 },
 })
 
