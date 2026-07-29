@@ -1,0 +1,56 @@
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.24;
+  letter-spacing: .01em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+
+p { max-width: 36em; }
+
+/* the reference steps each heading line further in — quiet asymmetry */
+h1 .ln:nth-child(2), h2 .ln:nth-child(2) { margin-left: .9em; }
+h1 .ln:nth-child(3), h2 .ln:nth-child(3) { margin-left: 2em; }
+
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: .3em;
+  text-transform: lowercase;   /* Cinzel renders as Roman caps */
+  color: var(--paper-60);
+  margin-bottom: clamp(14px, 1.6vw, 24px);
+}
+.tone-paper .eyebrow { color: var(--ink-60); }
+
+.lede {
+  color: var(--paper-60);
+  font-size: calc(var(--fs-body) * 1.06);
+}
+.tone-paper .lede, .tone-paper p { color: var(--ink-60); }
+.tone-paper h1, .tone-paper h2, .tone-paper h3 { color: var(--ink); }
+
+.num {
+  font-variant-numeric: oldstyle-nums tabular-nums;
+}
+
+/* split text plumbing — masks */
+.ln { display: block; overflow: hidden; }
+.ln-in { display: block; will-change: transform; }
+.ch { display: inline-block; overflow: hidden; vertical-align: top; }
+.ch-in { display: inline-block; will-change: transform; }
+
+/* vertical section labels — the left-edge signature */
+.sect-label {
+  position: absolute; left: calc(var(--pad-x) * .45); top: clamp(80px, 14vh, 160px);
+  writing-mode: vertical-rl;
+  font-family: var(--font-label);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: .34em;
+  text-transform: lowercase;
+  color: var(--paper-40);
+  pointer-events: none;
+}
+.tone-paper .sect-label { color: var(--ink-30); }

@@ -1,0 +1,83 @@
+<svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Preview of the jobpilot first view — a small serif tagline floating in a misty forest">
+  <defs>
+    <linearGradient id="psky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#23211B"/>
+      <stop offset="45%" stop-color="#17150F"/>
+      <stop offset="100%" stop-color="#0A0801"/>
+    </linearGradient>
+    <radialGradient id="pmist" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D9D7D4" stop-opacity=".16"/>
+      <stop offset="100%" stop-color="#D9D7D4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pbreach" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D9D7D4" stop-opacity=".12"/>
+      <stop offset="100%" stop-color="#D9D7D4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="psoft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="pgrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 .85  0 0 0 0 .84  0 0 0 0 .83  0 0 0 .04 0"/>
+    </filter>
+  </defs>
+  <style>
+    .pm1 { animation: pd1 24s ease-in-out infinite alternate; }
+    .pm2 { animation: pd2 17s ease-in-out infinite alternate; }
+    .pm3 { animation: pd1 30s ease-in-out infinite alternate-reverse; }
+    @keyframes pd1 { from { transform: translateX(-80px) } to { transform: translateX(100px) } }
+    @keyframes pd2 { from { transform: translateX(70px) } to { transform: translateX(-90px) } }
+    .ptitle { font-family: Georgia, serif; font-size: 30px; fill: #D9D7D4; letter-spacing: 1px;
+              opacity: 0; animation: pfade 2s ease .5s forwards; }
+    .pt2 { animation-delay: .8s; }
+    @keyframes pfade { to { opacity: 1 } }
+    .plabel { font-family: Georgia, serif; font-size: 11px; letter-spacing: 4px; fill: #8C8A85; text-transform: uppercase; }
+    .cue { stroke: #8C8A85; stroke-width: 1; transform-origin: 1128px 640px;
+           animation: cue 2.2s cubic-bezier(.65,0,.35,1) infinite; }
+    @keyframes cue { 0% { transform: scaleY(0) } 45% { transform: scaleY(1) } 100% { transform: scaleY(1); opacity: 0 } }
+    .vlabel { font-family: Georgia, serif; font-size: 11px; letter-spacing: 5px; fill: #55534E; text-transform: uppercase; }
+    .ink { animation: inkfloat 12s ease-in-out infinite alternate; }
+    @keyframes inkfloat { from { transform: translate(0,0) scale(1) } to { transform: translate(40px,-16px) scale(1.15) } }
+  </style>
+
+  <rect width="1200" height="720" fill="url(#psky)"/>
+  <ellipse cx="230" cy="120" rx="380" ry="200" fill="url(#pbreach)"/>
+
+  <!-- mist banks -->
+  <g class="pm1"><ellipse cx="380" cy="300" rx="420" ry="80" fill="url(#pmist)"/></g>
+  <g class="pm2"><ellipse cx="860" cy="420" rx="460" ry="75" fill="url(#pmist)"/></g>
+  <g class="pm3"><ellipse cx="600" cy="200" rx="380" ry="60" fill="url(#pmist)"/></g>
+
+  <!-- cursor fluid wisp -->
+  <g class="ink" opacity=".5"><ellipse cx="760" cy="290" rx="120" ry="60" fill="url(#pmist)"/></g>
+
+  <!-- treelines -->
+  <g filter="url(#psoft)" opacity=".7">
+    <path fill="#191712" d="M0 520 L30 496 L54 520 L84 486 L112 520 L148 500 L172 520 L206 480 L238 520 L276 498 L300 520 L336 484 L368 520 L406 500 L430 520 L466 478 L500 520 L540 498 L564 520 L600 484 L632 520 L672 500 L696 520 L732 478 L766 520 L806 498 L830 520 L866 484 L898 520 L938 500 L962 520 L998 478 L1032 520 L1072 498 L1096 520 L1132 486 L1160 520 L1188 502 L1200 512 L1200 720 L0 720 Z"/>
+  </g>
+  <path fill="#0D0B05" d="M0 600 L36 566 L66 600 L104 556 L140 600 L184 574 L214 600 L256 550 L296 600 L342 572 L372 600 L416 552 L456 600 L502 574 L532 600 L576 548 L618 600 L664 572 L694 600 L738 552 L778 600 L824 574 L854 600 L898 548 L940 600 L986 572 L1016 600 L1060 556 L1098 600 L1142 574 L1170 600 L1200 580 L1200 720 L0 720 Z"/>
+  <g class="pm2" opacity=".9"><ellipse cx="600" cy="590" rx="560" ry="60" fill="url(#pmist)"/></g>
+
+  <!-- header -->
+  <g class="plabel">
+    <path d="M 64 40 A 12 12 0 1 0 66.5 50" fill="none" stroke="#D9D7D4" stroke-width="1.6" opacity=".9"/>
+    <text x="46" y="76" style="font-size:9px; letter-spacing:3px; fill:#8C8A85">jobpilot</text>
+    <text x="1108" y="48">menu</text>
+  </g>
+
+  <!-- vertical section label -->
+  <text class="vlabel" x="40" y="220" transform="rotate(90 40 220)">first view</text>
+
+  <!-- the whisper -->
+  <text class="ptitle" x="330" y="352">The work remembers.</text>
+  <text class="ptitle pt2" x="358" y="396">Let it speak.</text>
+
+  <!-- bottom bar -->
+  <g class="plabel">
+    <text x="46" y="668">©2026</text>
+    <text x="420" y="668">10:41:07&#160;&#160;ist, hyderabad ind</text>
+    <text x="660" y="668">01:11:07&#160;&#160;et, new york usa</text>
+    <text x="1080" y="668">scroll</text>
+  </g>
+  <line class="cue" x1="1128" y1="614" x2="1128" y2="640"/>
+
+  <rect width="1200" height="720" filter="url(#pgrain)" opacity=".6"/>
+</svg>

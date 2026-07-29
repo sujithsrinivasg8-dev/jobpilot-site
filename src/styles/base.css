@@ -1,0 +1,151 @@
+/* ── reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--ink);
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline-dark) var(--ink);
+}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 2;
+  min-height: 100svh;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, canvas, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul { list-style: none; }
+::selection { background: var(--paper); color: var(--ink); }
+
+:focus-visible { outline: 1px solid var(--paper); outline-offset: 4px; }
+.tone-paper :focus-visible { outline-color: var(--ink); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: fixed; top: 0; left: 0; z-index: 40;
+  padding: .6em 1.2em; background: var(--paper); color: var(--ink);
+  transform: translateY(-110%); transition: transform .3s var(--ease-silk);
+  font-size: .85rem; letter-spacing: .12em; text-transform: lowercase;
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* ── z-map layers (bottom→top): 0 surface · 1 bands · 2 fluid · 3 content
+      · 8 header · 9 menu · 10 scrim · 11 preloader ────────────── */
+
+/* grain — living film surface over everything below content */
+.grain {
+  position: fixed; inset: -60px; z-index: 5;
+  pointer-events: none;
+  background-image: var(--grain-url);
+  background-size: 240px 240px;
+  opacity: .07;
+  mix-blend-mode: screen;
+}
+.grain--ink { mix-blend-mode: multiply; opacity: .05; }
+
+/* vignette on viewport edges */
+.vignette {
+  position: fixed; inset: 0; z-index: 4; pointer-events: none;
+  background: radial-gradient(ellipse 120% 120% at 50% 45%, transparent 55%,
+              color-mix(in srgb, var(--ink) 55%, transparent) 100%);
+}
+
+/* ── drifting mist bands ───────────────────────────────────────── */
+.bands { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.band-layer { position: absolute; left: 0; width: 100%; will-change: transform; }
+.band-layer--1 { top: 6vh;  opacity: .55; filter: blur(1px); }
+.band-layer--2 { top: 38vh; opacity: .4;  filter: blur(2.5px); }
+.band-track {
+  display: flex; width: max-content; will-change: transform;
+  animation: drift var(--t, 90s) linear infinite;
+}
+.band-layer--1 .band-track { --t: 95s; animation-direction: reverse; }
+.band-layer--2 .band-track { --t: 58s; }
+.band-track img { width: 160vw; max-width: none; height: auto; flex: none; }
+@keyframes drift { to { transform: translate3d(-50%, 0, 0); } }
+
+/* fluid ink canvas — ABOVE content like the reference (their z-75),
+   below header; alpha ceiling keeps text legible */
+.fluid {
+  position: fixed; inset: 0; z-index: 6; width: 100%; height: 100%;
+  pointer-events: none; mix-blend-mode: screen;
+}
+.fluid.fluid--multiply { mix-blend-mode: multiply; }
+
+/* content root */
+main { position: relative; z-index: 3; }
+
+/* ── cursor ────────────────────────────────────────────────────── */
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 30;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--paper); pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: scale .3s var(--ease-silk), opacity .3s var(--ease-silk),
+              background-color .3s var(--ease-silk);
+  opacity: 0;
+}
+.cursor.is-on { opacity: 1; }
+.cursor.is-hover { scale: 3; opacity: .35; }
+.cursor.is-ink { background: var(--ink); }
+@media (hover: none) { .cursor { display: none; } }
+body.has-cursor { cursor: none; }
+body.has-cursor a, body.has-cursor button { cursor: none; }
+
+/* ── page transition scrim ─────────────────────────────────────── */
+.scrim {
+  position: fixed; inset: 0; z-index: 10;
+  background: var(--ink);
+  clip-path: inset(100% 0 0 0);
+  pointer-events: none;
+  visibility: hidden;
+}
+.scrim .scrim-band {
+  position: absolute; top: 30%; left: 0; width: 100%; opacity: .5;
+}
+.scrim .scrim-band img { width: 160vw; max-width: none; }
+
+/* ── preloader ─────────────────────────────────────────────────── */
+.preloader {
+  position: fixed; inset: 0; z-index: 11;
+  background: var(--ink);
+  display: grid; place-items: center;
+}
+.preloader.is-done { display: none; }
+.pre-tag {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+  letter-spacing: .04em;
+  font-weight: 400;
+}
+.pre-count {
+  position: absolute; left: var(--pad-x); bottom: calc(var(--pad-x) * .75);
+  font-family: var(--font-label);
+  font-size: var(--fs-eyebrow); letter-spacing: .18em;
+  color: var(--paper-60);
+  font-variant-numeric: tabular-nums;
+}
+
+/* reduced motion: stillness is also a mode */
+@media (prefers-reduced-motion: reduce) {
+  .band-track { animation: none; }
+  .fluid { display: none; }
+  .cursor { display: none; }
+  body.has-cursor, body.has-cursor a, body.has-cursor button { cursor: auto; }
+}

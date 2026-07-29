@@ -1,0 +1,22 @@
+<svg viewBox="0 0 1200 70" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="">
+  <style>
+    .l { stroke: #3A3830; stroke-width: 1; }
+    .lL { transform-origin: 560px 35px; animation: growL 1.6s cubic-bezier(.65,0,.35,1) forwards; transform: scaleX(0); }
+    .lR { transform-origin: 640px 35px; animation: growL 1.6s cubic-bezier(.65,0,.35,1) forwards; transform: scaleX(0); }
+    @keyframes growL { to { transform: scaleX(1); } }
+    .seal { fill: none; stroke: #8C8A85; stroke-width: 2; stroke-linecap: round;
+            stroke-dasharray: 130; stroke-dashoffset: 130;
+            animation: draw 1.8s cubic-bezier(.65,0,.35,1) .3s forwards; }
+    @keyframes draw { to { stroke-dashoffset: 18; } }
+    .spin { animation: turn 40s linear infinite; transform-origin: 600px 35px; }
+    @keyframes turn { to { transform: rotate(360deg); } }
+    .shimmer { animation: sh 5s ease-in-out infinite; }
+    @keyframes sh { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+  </style>
+  <rect width="1200" height="70" fill="#0A0801"/>
+  <line class="l lL" x1="80" y1="35" x2="560" y2="35"/>
+  <line class="l lR" x1="640" y1="35" x2="1120" y2="35"/>
+  <g class="spin shimmer">
+    <path class="seal" d="M 615 24 A 16 16 0 1 0 618 46"/>
+  </g>
+</svg>

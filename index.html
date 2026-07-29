@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jobpilot — the work remembers</title>
+  <meta name="description" content="jobpilot — an instrument for the job search. Discover, tailor, arrive. Nothing invented; everything remembered." />
+  <style>html{background:#0A0801}body{margin:0;background:#0A0801;color:#D9D7D4}.preloader{position:fixed;inset:0;background:#0A0801;z-index:11}</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500&family=Cinzel:wght@400&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23D9D7D4' stroke-width='6'/%3E%3C/svg%3E">
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#page">skip to content</a>
+
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="bands" aria-hidden="true">
+    <div class="band-layer band-layer--1"><div class="band-track"><img alt="" /><img alt="" /></div></div>
+    <div class="band-layer band-layer--2"><div class="band-track"><img alt="" /><img alt="" /></div></div>
+  </div>
+
+  <canvas class="fluid" id="fluid" aria-hidden="true"></canvas>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <header class="site-head">
+    <a class="brand" href="index.html">jobpilot<span class="brand-seal" aria-hidden="true"></span></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuOverlay">
+      <span class="mbox"><span class="m-a">menu</span><span class="m-b" aria-hidden="true">close</span></span>
+    </button>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <div class="menu-band" aria-hidden="true"><div class="band-track"><img alt="" /><img alt="" /></div></div>
+    <nav class="menu-nav" aria-label="site">
+      <ul>
+        <li><a class="menu-link" href="index.html">home</a></li>
+        <li><a class="menu-link" href="philosophy.html">philosophy</a></li>
+        <li class="menu-group">
+          <span class="menu-label">the practice</span>
+          <ul class="menu-sub">
+            <li><a href="pillars/discover.html">01 — discover</a></li>
+            <li><a href="pillars/tailor.html">02 — tailor</a></li>
+            <li><a href="pillars/arrive.html">03 — arrive</a></li>
+          </ul>
+        </li>
+        <li><a class="menu-link" href="company.html">company</a></li>
+        <li><a class="menu-link" href="contact.html">contact</a></li>
+      </ul>
+    </nav>
+    <div class="menu-edge menu-edge--left"><a class="roll" href="privacy.html">privacy</a></div>
+    <div class="menu-edge menu-edge--right">
+      <p class="addr">film nagar · hyderabad, ind</p>
+      <p class="addr">228 park ave s · new york, usa</p>
+    </div>
+    <div class="menu-edge menu-edge--social">
+      <a class="roll" href="https://github.com" data-no-transition target="_blank" rel="noopener">github</a>
+      <a class="roll" href="https://x.com" data-no-transition target="_blank" rel="noopener">x</a>
+    </div>
+  </div>
+
+  <div class="scrim" id="scrim" aria-hidden="true">
+    <div class="scrim-band"><div class="band-track"><img alt="" /><img alt="" /></div></div>
+  </div>
+
+  <main id="page">
+    <!-- ── first view ─────────────────────────────────────────── -->
+    <section class="fv fv--home">
+      <div class="fv-art" data-parallax-speed="0.94"><img data-art="hero" alt="Mist drifting through a dark forest ridge" /></div>
+      <div class="fv-inner">
+        <h1 class="fv-title">The work remembers.<br>Let it speak.</h1>
+        <p class="fv-kicker">an instrument for the job search — quiet, truthful, tireless.</p>
+      </div>
+      <div class="fv-seal" aria-hidden="true" data-parallax-speed="0.9"></div>
+      <div class="fv-bar">
+        <span>©2026</span>
+        <span class="clocks" aria-hidden="true">
+          <span class="clock" data-clock data-tz="Asia/Kolkata" data-label="ist, hyderabad ind"></span>
+          <span class="clock" data-clock data-tz="America/New_York" data-label="et, new york usa"></span>
+        </span>
+        <span class="scroll-cue">scroll<span class="cue-line" aria-hidden="true"></span></span>
+      </div>
+      <span class="sr-only">local time in hyderabad and new york</span>
+    </section>
+
+    <!-- ── philosophy teaser ──────────────────────────────────── -->
+    <section class="sect sect--teaser">
+      <span class="sect-label" aria-hidden="true">philosophy</span>
+      <div class="sect-inner">
+        <div class="teaser-copy">
+          <p class="eyebrow" data-reveal="eyebrow">philosophy</p>
+          <h2 data-reveal="lines">Nothing invented.<br>Everything remembered.</h2>
+          <p class="lede" data-reveal="lines">A career is not a list of duties. It is a pattern of true outcomes. We write nothing that is not already yours — we find what the work left behind, and arrange it so the right room can hear it.</p>
+          <a class="roll link-view" href="philosophy.html" data-reveal="fade">view philosophy</a>
+        </div>
+        <div class="cluster">
+          <figure class="frame" data-parallax-speed="0.9"><img data-art="ridge" alt="Layered mountain ridges dissolving into mist" /></figure>
+          <figure class="frame" data-parallax-speed="1.06"><img data-art="ripple" alt="Rings widening on dark water" /></figure>
+          <figure class="frame" data-parallax-speed="1.14"><img data-art="stones" alt="Stones resting in raked gravel" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── practice intro ─────────────────────────────────────── -->
+    <section class="sect sect--practice">
+      <span class="sect-label" aria-hidden="true">the practice</span>
+      <div class="sect-inner">
+        <div class="sect-head">
+          <p class="eyebrow" data-reveal="eyebrow">the practice</p>
+          <h2 data-reveal="lines">Three practices,<br>one quiet machine.</h2>
+        </div>
+        <figure class="frame wide"><img data-art="wide" alt="A wide foggy valley of ridgelines and firs" /></figure>
+        <a class="roll link-view" href="pillars/discover.html" data-reveal="fade">begin with discover</a>
+      </div>
+    </section>
+
+    <!-- ── pillar deck (sticky stack) ─────────────────────────── -->
+    <section class="deck" aria-label="the three practices">
+      <article class="panel">
+        <div class="panel-in">
+          <span class="ghost num" aria-hidden="true" data-parallax-speed="0.92">01</span>
+          <div class="panel-copy">
+            <p class="eyebrow" data-reveal="eyebrow">practice 01</p>
+            <h3 data-reveal="lines">discover</h3>
+            <p class="essence" data-reveal="lines">every opening, found while it still breathes.</p>
+            <p class="blurb" data-reveal="lines">Searches that never sleep sweep the boards and the quiet career pages alike. Each posting is read the way a veteran recruiter reads — in six seconds, and completely.</p>
+            <a class="roll link-view" href="pillars/discover.html" data-reveal="fade">view discover</a>
+          </div>
+          <figure class="frame panel-art"><img data-art="threads" alt="Threads of light falling through fog" /></figure>
+        </div>
+      </article>
+      <article class="panel panel--flip">
+        <div class="panel-in">
+          <span class="ghost num" aria-hidden="true" data-parallax-speed="0.92">02</span>
+          <div class="panel-copy">
+            <p class="eyebrow" data-reveal="eyebrow">practice 02</p>
+            <h3 data-reveal="lines">tailor</h3>
+            <p class="essence" data-reveal="lines">your truth, arranged for the role.</p>
+            <p class="blurb" data-reveal="lines">Every line is reshaped around its outcome — accomplished, measured, done. Nothing is ever invented; what is missing is asked for, never imagined.</p>
+            <a class="roll link-view" href="pillars/tailor.html" data-reveal="fade">view tailor</a>
+          </div>
+          <figure class="frame panel-art"><img data-art="ripple" alt="Rings widening on dark water" /></figure>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-in">
+          <span class="ghost num" aria-hidden="true" data-parallax-speed="0.92">03</span>
+          <div class="panel-copy">
+            <p class="eyebrow" data-reveal="eyebrow">practice 03</p>
+            <h3 data-reveal="lines">arrive</h3>
+            <p class="essence" data-reveal="lines">every application, remembered and measured.</p>
+            <p class="blurb" data-reveal="lines">From first send to final word, each application leaves a trace. The traces become patterns, and the patterns teach the next attempt.</p>
+            <a class="roll link-view" href="pillars/arrive.html" data-reveal="fade">view arrive</a>
+          </div>
+          <figure class="frame panel-art"><img data-art="stones" alt="Stones resting in raked gravel" /></figure>
+        </div>
+      </article>
+    </section>
+
+    <!-- ── company band — the paper inversion ─────────────────── -->
+    <section class="sect sect--company tone-paper">
+      <span class="sect-label" aria-hidden="true">company</span>
+      <div class="sect-inner">
+        <div class="statement">
+          <p class="eyebrow" data-reveal="eyebrow">company</p>
+          <h2 data-reveal="lines">An instrument,<br>not a factory.</h2>
+          <p data-reveal="lines">jobpilot automates the labor of the search — the finding, the shaping, the sending, the remembering — and refuses, by design, to automate the truth.</p>
+          <p data-reveal="lines">Every claim it makes on your behalf is one you have already earned. A human hand approves every send. That is the whole philosophy, and it is not negotiable.</p>
+          <a class="roll link-view" href="company.html" data-reveal="fade">view company</a>
+        </div>
+        <figure class="frame" data-parallax-speed="0.96"><img data-art="ridge" alt="Mountain ridges under morning fog" /></figure>
+      </div>
+    </section>
+
+    <!-- ── footer ─────────────────────────────────────────────── -->
+    <footer class="footer">
+      <p class="foot-word" data-reveal="chars" aria-label="jobpilot">jobpilot</p>
+      <div class="foot-grid">
+        <div class="foot-col">
+          <p class="eyebrow">site</p>
+          <ul class="foot-nav">
+            <li><a class="roll" href="index.html">home</a></li>
+            <li><a class="roll" href="philosophy.html">philosophy</a></li>
+            <li><a class="roll" href="company.html">company</a></li>
+            <li><a class="roll" href="contact.html">contact</a></li>
+            <li><a class="roll" href="privacy.html">privacy</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <p class="eyebrow">the practice</p>
+          <ul>
+            <li><a class="roll" href="pillars/discover.html">01 — discover</a></li>
+            <li><a class="roll" href="pillars/tailor.html">02 — tailor</a></li>
+            <li><a class="roll" href="pillars/arrive.html">03 — arrive</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <p class="eyebrow">offices</p>
+          <p class="addr">film nagar<br>hyderabad, ind</p>
+          <p class="addr">228 park ave s<br>new york, usa</p>
+        </div>
+      </div>
+      <div class="foot-base">
+        <span>© 2026 jobpilot</span>
+        <span class="clocks" aria-hidden="true">
+          <span class="clock" data-clock data-tz="Asia/Kolkata" data-label="ist, hyderabad ind"></span>
+          <span class="clock" data-clock data-tz="America/New_York" data-label="et, new york usa"></span>
+        </span>
+        <button class="roll" data-top>top</button>
+      </div>
+    </footer>
+  </main>
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <p class="pre-tag">The work remembers.</p>
+    <div class="pre-count"><span id="preCount">0</span></div>
+  </div>
+
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>

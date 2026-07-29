@@ -1,0 +1,39 @@
+:root {
+  /* ── the two colors. nothing else exists. ─────────────────────── */
+  --ink:   #0A0801;   /* near-black, warm undertone */
+  --paper: #D9D7D4;   /* warm washi gray            */
+
+  /* mixes (opacity-derived tones of the same two colors) */
+  --ink-60:   color-mix(in oklab, var(--ink) 60%, var(--paper));
+  --ink-30:   color-mix(in oklab, var(--ink) 30%, var(--paper));
+  --paper-60: color-mix(in oklab, var(--paper) 60%, var(--ink));
+  --paper-40: color-mix(in oklab, var(--paper) 40%, var(--ink));
+  --paper-25: color-mix(in oklab, var(--paper) 25%, var(--ink));
+  --hairline-dark:  color-mix(in oklab, var(--paper) 22%, var(--ink));  /* on ink   */
+  --hairline-light: color-mix(in oklab, var(--ink) 18%, var(--paper));  /* on paper */
+
+  /* ── motion ───────────────────────────────────────────────────── */
+  --ease-silk: cubic-bezier(0.16, 1, 0.3, 1);   /* out — reveals, hovers            */
+  --ease-veil: cubic-bezier(0.65, 0, 0.35, 1);  /* inOut — wipes, menu, transitions */
+  --dur-micro:  .45s;
+  --dur-reveal: 1.1s;
+  --dur-wipe:   .9s;
+  --dur-page:   1.3s;
+
+  /* ── layout ───────────────────────────────────────────────────── */
+  --pad-x: clamp(20px, 4.5vw, 72px);
+  --max-w: 1600px;
+  --gap:   clamp(16px, 2vw, 32px);
+
+  /* ── type (matched to the reference: Playfair / Shippori / Cinzel) */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Shippori Mincho', Georgia, serif;
+  --font-label:   'Cinzel', Georgia, serif;
+
+  /* quiet scale — the reference h1/h2 sit near 3.1vw, never shout */
+  --fs-h1:  clamp(1.9rem, 3.6vw, 3.9rem);
+  --fs-h2:  clamp(1.65rem, 3.1vw, 3.3rem);
+  --fs-h3:  clamp(1.45rem, 2.6vw, 2.6rem);
+  --fs-body: clamp(.8rem, .95vw, .95rem);
+  --fs-eyebrow: .68rem;
+}

@@ -1,0 +1,58 @@
+<svg viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three practices: discover, tailor, arrive">
+  <defs>
+    <radialGradient id="pm" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#D9D7D4" stop-opacity=".07"/>
+      <stop offset="100%" stop-color="#D9D7D4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <style>
+    .card { animation: rise 1.1s cubic-bezier(.16,1,.3,1) both; }
+    .c1 { animation-delay: .1s } .c2 { animation-delay: .3s } .c3 { animation-delay: .5s }
+    @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+    .float1 { animation: fl 9s ease-in-out infinite; }
+    .float2 { animation: fl 11s ease-in-out 1.2s infinite; }
+    .float3 { animation: fl 10s ease-in-out 2.4s infinite; }
+    @keyframes fl { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .ghost { font-family: Georgia, serif; font-size: 120px; fill: #D9D7D4; opacity: .06; }
+    .name  { font-family: Georgia, serif; font-size: 34px; fill: #D9D7D4; }
+    .ess   { font-family: Georgia, serif; font-style: italic; font-size: 15px; fill: #8C8A85; }
+    .eb    { font-family: Georgia, serif; font-size: 11px; letter-spacing: 4px; fill: #64625D; text-transform: uppercase; }
+    .frame { fill: none; stroke: #2A2820; stroke-width: 1; }
+    .pulse { animation: pu 4s ease-in-out infinite; }
+    @keyframes pu { 0%,100% { stroke: #2A2820 } 50% { stroke: #4A483F } }
+  </style>
+  <rect width="1200" height="300" fill="#0A0801"/>
+
+  <g class="card c1">
+    <g class="float1">
+      <rect class="frame pulse" x="40" y="30" width="350" height="240" rx="2"/>
+      <ellipse cx="215" cy="150" rx="170" ry="110" fill="url(#pm)"/>
+      <text class="ghost" x="64" y="140">01</text>
+      <text class="eb" x="70" y="180">practice 01</text>
+      <text class="name" x="70" y="222">discover</text>
+      <text class="ess" x="70" y="250">every opening, found while it breathes.</text>
+    </g>
+  </g>
+
+  <g class="card c2">
+    <g class="float2">
+      <rect class="frame pulse" x="425" y="30" width="350" height="240" rx="2"/>
+      <ellipse cx="600" cy="150" rx="170" ry="110" fill="url(#pm)"/>
+      <text class="ghost" x="449" y="140">02</text>
+      <text class="eb" x="455" y="180">practice 02</text>
+      <text class="name" x="455" y="222">tailor</text>
+      <text class="ess" x="455" y="250">your truth, arranged for the role.</text>
+    </g>
+  </g>
+
+  <g class="card c3">
+    <g class="float3">
+      <rect class="frame pulse" x="810" y="30" width="350" height="240" rx="2"/>
+      <ellipse cx="985" cy="150" rx="170" ry="110" fill="url(#pm)"/>
+      <text class="ghost" x="834" y="140">03</text>
+      <text class="eb" x="840" y="180">practice 03</text>
+      <text class="name" x="840" y="222">arrive</text>
+      <text class="ess" x="840" y="250">remembered and measured.</text>
+    </g>
+  </g>
+</svg>
